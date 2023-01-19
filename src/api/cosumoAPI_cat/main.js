@@ -51,6 +51,7 @@ async function post_cat_favorite(urlAPI, id) {
         image_id: id,
       }),
     });
+    cats_favorites(API);
     return response;
   } catch (e) {
     console.log(e);
@@ -66,6 +67,7 @@ async function delete_cat_favorite(urlAPI) {
       },
     });
     alert("Gato Eliminado de Favoritos");
+    cats_favorites(API);
     return response;
   } catch (e) {
     console.log(e);
