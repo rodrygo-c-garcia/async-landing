@@ -1,4 +1,4 @@
-const API = "https://api.thecatapi.com/v1/images/search";
+const API = "https://api.thecatapi.com/v1";
 
 async function fetchData(urlAPI) {
   const response = await fetch(urlAPI);
@@ -6,46 +6,95 @@ async function fetchData(urlAPI) {
   return data;
 }
 
-const consume_API = async (urlAPI) => {
+const cat_one = async (urlAPI) => {
   try {
-    const img = await fetchData(`${urlAPI}`);
+    const img = await fetchData(`${urlAPI}/images/search`);
     const imgHTML = document.querySelector("img");
     imgHTML.src = img[0].url;
-
-    const imgQueryParameters = await fetchData(
-      `${urlAPI}?limit=10&'api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06'`
-    );
-    mostrarImagenes(imgQueryParameters);
   } catch (e) {
     console.log(e);
   }
 };
 
-consume_API(API);
+const cats_aletorios = async (urlAPI) => {
+  try {
+    const data = await fetchData(
+      `${urlAPI}/images/search?limit=5&api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06`
+    );
+    mostrarImagenes(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const cats_favorites = async (urlAPI) => {
+  try {
+    const data = await fetchData(
+      `${urlAPI}/favourites?limit=10&api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06`
+    );
+    mostrarImagenes(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+cat_one(API);
+cats_aletorios(API);
 
 function reload() {
   consume_API(API);
 }
 
 function mostrarImagenes(data) {
-  console.log(data);
   const imgs = document.getElementById("imgs");
   imgs.innerHTML = "";
-  for (let i = 0; i < data.length; i++) {
-    // Crear una nueva imagen
-    let img = new Image();
-    let btn = document.createElement("button");
 
-    // Establecer la URL de la imagen
-    img.src = data[i].url;
-    btn.innerHTML = "Añadir a Favoritos";
-    btn.classList.add("btn-success");
-    btn.setAttribute("type", "button");
-    // Establecer el ancho y alto de la imagen
-    img.width = "300";
-    img.height = "200";
-    // Agregar la imagen al documento
-    imgs.appendChild(img);
-    imgs.appendChild(btn);
+  for (let i = 0; i < data.length; i++) {
+    createImg(i + 1, data[i].url, imgs);
+    createBtn(i + 1, imgs);
   }
+}
+
+function createImg(id, link, imgs) {
+  let img = new Image();
+  img.src = link;
+  img.setAttribute("id", `img${id}`);
+
+  img.width = "300";
+  img.height = "200";
+
+  imgs.appendChild(img);
+}
+
+function createBtn(id, imgs) {
+  let btn = document.createElement("button");
+
+  btn.innerHTML = "Añadir a Favoritos";
+  btn.classList.add("btn-success");
+  btn.setAttribute("id", `btn${id}`);
+  btn.setAttribute("onclick", `addFavorites(${id})`);
+
+  imgs.appendChild(btn);
+}
+
+function addFavorites(id) {
+  let btn = document.createElement("button");
+  btn.innerHTML = "Eliminar de Favoritos";
+  btn.classList.add("btn-danger");
+  btn.setAttribute("id", `btn${id}`);
+  btn.setAttribute("onclick", `deleteFavorites(${id})`);
+
+  const cats_favorites = document.getElementById("cats-favorites");
+  const imgFavorite = document.getElementById(`img${id}`);
+  cats_favorites.appendChild(imgFavorite);
+
+  const btn_rm = document.getElementById(`btn${id}`);
+  btn_rm.remove();
+  cats_favorites.appendChild(btn);
+}
+
+function deleteFavorites(id) {
+  const cats_delete = document.getElementById(`img${id}`);
+  const imgs = document.getElementById("imgs");
+  imgs.appendChild(cats_delete);
 }
