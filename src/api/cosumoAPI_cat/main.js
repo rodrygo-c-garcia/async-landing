@@ -84,7 +84,7 @@ cats_aletorios(API);
 cats_favorites(API);
 
 function reload() {
-  consume_API(API);
+  cat_one(API);
 }
 
 function mostrarImagenes(data) {
