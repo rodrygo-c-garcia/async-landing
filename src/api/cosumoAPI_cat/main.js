@@ -11,8 +11,9 @@ const consume_API = async (urlAPI) => {
     const img = await fetchData(`${urlAPI}`);
     const imgHTML = document.querySelector("img");
     imgHTML.src = img[0].url;
-    // mostramos en la consola
-    console.log(img[0].url);
+
+    const imgQueryParameters = await fetchData(`${urlAPI}?limit=10`);
+    mostrarImagenes(imgQueryParameters);
   } catch (e) {
     console.log(e);
   }
@@ -22,4 +23,25 @@ consume_API(API);
 
 function reload() {
   consume_API(API);
+  const imgs = document.getElementById("imgs");
+  imgs.innerHTML = "";
+}
+
+function mostrarImagenes(data) {
+  console.log(data);
+  const imgs = document.getElementById("imgs");
+
+  for (let i = 0; i < data.length; i++) {
+    // Crear una nueva imagen
+    var img = new Image();
+
+    // Establecer la URL de la imagen
+    img.src = data[i].url;
+
+    // Establecer el ancho y alto de la imagen
+    img.width = "300";
+    img.height = "200";
+    // Agregar la imagen al documento
+    imgs.appendChild(img);
+  }
 }
