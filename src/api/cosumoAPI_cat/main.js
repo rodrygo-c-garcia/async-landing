@@ -34,14 +34,18 @@ function mostrarImagenes(data) {
   for (let i = 0; i < data.length; i++) {
     // Crear una nueva imagen
     let img = new Image();
+    let btn = document.createElement("button");
 
     // Establecer la URL de la imagen
     img.src = data[i].url;
-
+    btn.innerHTML = "Añadir a Favoritos";
+    btn.classList.add("btn-success");
+    btn.setAttribute("type", "button");
     // Establecer el ancho y alto de la imagen
     img.width = "300";
     img.height = "200";
     // Agregar la imagen al documento
     imgs.appendChild(img);
+    imgs.appendChild(btn);
   }
 }
