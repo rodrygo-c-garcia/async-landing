@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/rodrygo-c-garcia/async-landing/issues"
   },
-  "homepage": "https://github.com/rodrygo-c-garcia/async-landing#readme"
+  "homepage": "https://github.com/rodrygo-c-garcia/async-landing#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  }
 }

@@ -19,3 +19,7 @@ const consume_API = async (urlAPI) => {
 };
 
 consume_API(API);
+
+function reload() {
+  consume_API(API);
+}
