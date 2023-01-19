@@ -23,14 +23,12 @@ consume_API(API);
 
 function reload() {
   consume_API(API);
-  const imgs = document.getElementById("imgs");
-  imgs.innerHTML = "";
 }
 
 function mostrarImagenes(data) {
   console.log(data);
   const imgs = document.getElementById("imgs");
-
+  imgs.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     // Crear una nueva imagen
     var img = new Image();
