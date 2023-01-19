@@ -10,24 +10,42 @@
 </head>
 <body>
   <h1 class="fs-1">TheCatAPI - Documentation Portal</h1>
-  <div class="d-flex p-2 bd-highlight">
-    <div>
+  <div>
+
+    <section>
       <button type="button" class="btn btn-primary" onclick="reload()" >Cargar Nueva Imagen</button>
-    <div>
       <h2>Imagen Aleatoria</h2>
       <img width="500px" alt="pinche gato" class="img-fluid" >
-    </div>
+    </section>
+    <section>
+      <h2>Carga tu imagen de Gatitos</h2>
+      
+      <form id="uploading">
+        <input type="file" id="file" name="file">
+        <button type="submit" class="btn btn-success" onclick="upload_photo()">Subir Foto</button>
+      </form>
+    </section>
+
     <div id="container-article">
       <h2>Imagenes Aleatorias</h2>
       <article id="imgs" class="flex">
       </article>
     </div>
 
-    <section class="favorites">
+    <!-- <div class="container">
+      <h3>Gatos Favoritos</h3>
+      <div id="favorites" class="row row-cols-3">
+        <article id="cats-favorites" class="col"></article>
+      </div>
+    </div> -->
+
+
+    <div class="favorites">
       <h3>Gatos Favoritos</h3>
       <article id="cats-favorites">
       </article>
-    </section>
+    </div>
+
   </div>
  
   

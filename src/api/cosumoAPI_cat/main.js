@@ -103,11 +103,12 @@ function mostrar_favorites(data) {
   let band = 0;
 
   for (let i = 0; i < data.length; i++) {
-    createImg(data[i].id, data[i].image.url, cats_favorites, band);
+    let article = document.createElement("article");
+    createImg(data[i].id, data[i].image.url, cats_favorites, band, article);
   }
 }
 
-function createImg(id, url, imgs, band) {
+function createImg(id, url, imgs, band, article) {
   let img = new Image();
   img.src = url;
   img.setAttribute("id", `${id}`);
@@ -124,7 +125,7 @@ function createBtn(id, imgs, band) {
 
   btn.innerHTML = band ? "Añadir a Favoritos" : "Eliminar de Favoritos";
   btn.classList.add("btn");
-  btn.classList.add(`${band ? "btn-success" : "btn-danger"}`);
+  btn.classList.add(`${band ? "btn-primary" : "btn-danger"}`);
   btn.setAttribute("id", `${id}`);
   if (band) {
     btn.setAttribute(
@@ -137,6 +138,5 @@ function createBtn(id, imgs, band) {
       `delete_cat_favorite('${API}/favourites/${id}')`
     );
   }
-
   imgs.appendChild(btn);
 }
