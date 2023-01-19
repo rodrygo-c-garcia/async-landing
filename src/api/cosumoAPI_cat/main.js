@@ -46,6 +46,8 @@ async function post_cat_favorite(urlAPI, id) {
     const response = await fetch(urlAPI, {
       method: "POST",
       headers: {
+        "X-API-KEY":
+          "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
         "Content-Type": "application/json",
       },
       // informacion que queremos transmitir a la API
@@ -66,6 +68,8 @@ async function delete_cat_favorite(urlAPI) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "X-API-KEY":
+          "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
       },
     });
     cats_favorites(API);
@@ -125,12 +129,12 @@ function createBtn(id, imgs, band) {
   if (band) {
     btn.setAttribute(
       "onclick",
-      `post_cat_favorite('${API}/favourites?api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06', '${id}')`
+      `post_cat_favorite('${API}/favourites', '${id}')`
     );
   } else {
     btn.setAttribute(
       "onclick",
-      `delete_cat_favorite('${API}/favourites/${id}?api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06')`
+      `delete_cat_favorite('${API}/favourites/${id}')`
     );
   }
 
