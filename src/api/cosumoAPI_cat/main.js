@@ -1,7 +1,13 @@
 const API = "https://api.thecatapi.com/v1";
 
 async function fetchData(urlAPI) {
-  const response = await fetch(urlAPI);
+  const response = await fetch(urlAPI, {
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-KEY":
+        "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
+    },
+  });
   const data = await response.json();
   return data;
 }
@@ -18,9 +24,7 @@ const cat_one = async (urlAPI) => {
 
 const cats_aletorios = async (urlAPI) => {
   try {
-    const data = await fetchData(
-      `${urlAPI}/images/search?limit=5&api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06`
-    );
+    const data = await fetchData(`${urlAPI}/images/search?limit=5`);
 
     mostrarImagenes(data);
   } catch (e) {
@@ -30,9 +34,7 @@ const cats_aletorios = async (urlAPI) => {
 
 const cats_favorites = async (urlAPI) => {
   try {
-    const data = await fetchData(
-      `${urlAPI}/favourites?limit=50&api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06`
-    );
+    const data = await fetchData(`${urlAPI}/favourites`);
     mostrar_favorites(data);
   } catch (e) {
     console.log(e);
