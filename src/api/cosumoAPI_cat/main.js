@@ -40,17 +40,36 @@ const cats_favorites = async (urlAPI) => {
 };
 
 async function post_cat_favorite(urlAPI, id) {
-  const response = await fetch(urlAPI, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    // informacion que queremos transmitir a la APU
-    body: JSON.stringify({
-      image_id: id,
-    }),
-  });
-  return response;
+  try {
+    const response = await fetch(urlAPI, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // informacion que queremos transmitir a la API
+      body: JSON.stringify({
+        image_id: id,
+      }),
+    });
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function delete_cat_favorite(urlAPI) {
+  try {
+    const response = await fetch(urlAPI, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    alert("Gato Eliminado de Favoritos");
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 cat_one(API);
@@ -62,7 +81,6 @@ function reload() {
 }
 
 function mostrarImagenes(data) {
-  console.log(data);
   const imgs = document.getElementById("imgs");
   imgs.innerHTML = "";
   let band = 1;
@@ -100,11 +118,18 @@ function createBtn(id, imgs, band) {
   btn.innerHTML = band ? "Añadir a Favoritos" : "Eliminar de Favoritos";
   btn.classList.add("btn");
   btn.classList.add(`${band ? "btn-success" : "btn-danger"}`);
-  btn.setAttribute("id", `btn${id}`);
-  btn.setAttribute(
-    "onclick",
-    `post_cat_favorite('${API}/favourites?api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06', '${id}')`
-  );
+  btn.setAttribute("id", `${id}`);
+  if (band) {
+    btn.setAttribute(
+      "onclick",
+      `post_cat_favorite('${API}/favourites?api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06', '${id}')`
+    );
+  } else {
+    btn.setAttribute(
+      "onclick",
+      `delete_cat_favorite('${API}/favourites/${id}?api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06')`
+    );
+  }
 
   imgs.appendChild(btn);
 }
