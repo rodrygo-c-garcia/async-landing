@@ -66,7 +66,6 @@ async function delete_cat_favorite(urlAPI) {
         "Content-Type": "application/json",
       },
     });
-    alert("Gato Eliminado de Favoritos");
     cats_favorites(API);
     return response;
   } catch (e) {
