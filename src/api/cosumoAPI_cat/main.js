@@ -21,6 +21,7 @@ const cats_aletorios = async (urlAPI) => {
     const data = await fetchData(
       `${urlAPI}/images/search?limit=5&api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06`
     );
+
     mostrarImagenes(data);
   } catch (e) {
     console.log(e);
@@ -30,71 +31,80 @@ const cats_aletorios = async (urlAPI) => {
 const cats_favorites = async (urlAPI) => {
   try {
     const data = await fetchData(
-      `${urlAPI}/favourites?limit=10&api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06`
+      `${urlAPI}/favourites?limit=50&api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06`
     );
-    mostrarImagenes(data);
+    mostrar_favorites(data);
   } catch (e) {
     console.log(e);
   }
 };
 
+async function post_cat_favorite(urlAPI, id) {
+  const response = await fetch(urlAPI, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    // informacion que queremos transmitir a la APU
+    body: JSON.stringify({
+      image_id: id,
+    }),
+  });
+  return response;
+}
+
 cat_one(API);
 cats_aletorios(API);
+cats_favorites(API);
 
 function reload() {
   consume_API(API);
 }
 
 function mostrarImagenes(data) {
+  console.log(data);
   const imgs = document.getElementById("imgs");
   imgs.innerHTML = "";
-
+  let band = 1;
   for (let i = 0; i < data.length; i++) {
-    createImg(i + 1, data[i].url, imgs);
-    createBtn(i + 1, imgs);
+    createImg(data[i].id, data[i].url, imgs, band);
   }
 }
 
-function createImg(id, link, imgs) {
+function mostrar_favorites(data) {
+  console.log(data);
+  const cats_favorites = document.getElementById("cats-favorites");
+  cats_favorites.innerHTML = "";
+  let band = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    createImg(data[i].id, data[i].image.url, cats_favorites, band);
+  }
+}
+
+function createImg(id, url, imgs, band) {
   let img = new Image();
-  img.src = link;
-  img.setAttribute("id", `img${id}`);
+  img.src = url;
+  img.setAttribute("id", `${id}`);
 
   img.width = "300";
   img.height = "200";
 
   imgs.appendChild(img);
+  createBtn(id, imgs, band);
 }
 
-function createBtn(id, imgs) {
+function createBtn(id, imgs, band) {
   let btn = document.createElement("button");
 
-  btn.innerHTML = "Añadir a Favoritos";
-  btn.classList.add("btn-success");
+  btn.innerHTML = band ? "Añadir a Favoritos" : "Eliminar de Favoritos";
+  btn.classList.add("btn");
+  btn.classList.add(`${band ? "btn-success" : "btn-danger"}`);
   btn.setAttribute("id", `btn${id}`);
-  btn.setAttribute("onclick", `addFavorites(${id})`);
+  btn.setAttribute(
+    "onclick",
+    `post_cat_favorite('${API}/favourites?api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06', '${id}')`
+  );
 
   imgs.appendChild(btn);
-}
-
-function addFavorites(id) {
-  let btn = document.createElement("button");
-  btn.innerHTML = "Eliminar de Favoritos";
-  btn.classList.add("btn-danger");
-  btn.setAttribute("id", `btn${id}`);
-  btn.setAttribute("onclick", `deleteFavorites(${id})`);
-
-  const cats_favorites = document.getElementById("cats-favorites");
-  const imgFavorite = document.getElementById(`img${id}`);
-  cats_favorites.appendChild(imgFavorite);
-
-  const btn_rm = document.getElementById(`btn${id}`);
-  btn_rm.remove();
-  cats_favorites.appendChild(btn);
-}
-
-function deleteFavorites(id) {
-  const cats_delete = document.getElementById(`img${id}`);
-  const imgs = document.getElementById("imgs");
-  imgs.appendChild(cats_delete);
 }
