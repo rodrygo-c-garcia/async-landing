@@ -12,7 +12,9 @@ const consume_API = async (urlAPI) => {
     const imgHTML = document.querySelector("img");
     imgHTML.src = img[0].url;
 
-    const imgQueryParameters = await fetchData(`${urlAPI}?limit=10`);
+    const imgQueryParameters = await fetchData(
+      `${urlAPI}?limit=10&'api_key=live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06'`
+    );
     mostrarImagenes(imgQueryParameters);
   } catch (e) {
     console.log(e);
@@ -31,7 +33,7 @@ function mostrarImagenes(data) {
   imgs.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     // Crear una nueva imagen
-    var img = new Image();
+    let img = new Image();
 
     // Establecer la URL de la imagen
     img.src = data[i].url;
