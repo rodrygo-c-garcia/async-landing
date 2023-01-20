@@ -57,20 +57,6 @@ async function post_cat_favorite(id) {
 
     cats_favorites(API);
     return res;
-    // const response = await fetch(urlAPI, {
-    //   method: "POST",
-    //   headers: {
-    //     "X-API-KEY":
-    //       "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
-    //     "Content-Type": "application/json",
-    //   },
-    //   // informacion que queremos transmitir a la API
-    //   body: JSON.stringify({
-    //     image_id: id,
-    //   }),
-    // });
-    // cats_favorites(API);
-    // return response;
   } catch (e) {
     console.log(e);
   }
@@ -78,16 +64,18 @@ async function post_cat_favorite(id) {
 
 async function delete_cat_favorite(urlAPI) {
   try {
-    const response = await fetch(urlAPI, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY":
-          "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
-      },
-    });
+    const res = await api.delete(urlAPI);
+
+    // const response = await fetch(urlAPI, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "X-API-KEY":
+    //       "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
+    //   },
+    // });
     cats_favorites(API);
-    return response;
+    return res;
   } catch (e) {
     console.log(e);
   }
