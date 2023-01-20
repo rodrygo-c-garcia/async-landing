@@ -1,9 +1,9 @@
 // creamos una instancia de axios
-const instance_axios = axios.create({
+const api = axios.create({
   baseURL: "https://api.thecatapi.com/v1",
 });
 
-instance.defaults.headers.common["X-API-KEY"] =
+api.defaults.headers.common["X-API-KEY"] =
   "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06";
 
 const API = "https://api.thecatapi.com/v1";
@@ -49,22 +49,28 @@ const cats_favorites = async (urlAPI) => {
   }
 };
 
-async function post_cat_favorite(urlAPI, id) {
+async function post_cat_favorite(id) {
   try {
-    const response = await fetch(urlAPI, {
-      method: "POST",
-      headers: {
-        "X-API-KEY":
-          "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
-        "Content-Type": "application/json",
-      },
-      // informacion que queremos transmitir a la API
-      body: JSON.stringify({
-        image_id: id,
-      }),
+    const { res, status } = await api.post("/favourites", {
+      image_id: id,
     });
+
     cats_favorites(API);
-    return response;
+    return res;
+    // const response = await fetch(urlAPI, {
+    //   method: "POST",
+    //   headers: {
+    //     "X-API-KEY":
+    //       "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
+    //     "Content-Type": "application/json",
+    //   },
+    //   // informacion que queremos transmitir a la API
+    //   body: JSON.stringify({
+    //     image_id: id,
+    //   }),
+    // });
+    // cats_favorites(API);
+    // return response;
   } catch (e) {
     console.log(e);
   }
@@ -136,10 +142,7 @@ function createBtn(id, imgs, band) {
   btn.classList.add(`${band ? "btn-primary" : "btn-danger"}`);
   btn.setAttribute("id", `${id}`);
   if (band) {
-    btn.setAttribute(
-      "onclick",
-      `post_cat_favorite('${API}/favourites', '${id}')`
-    );
+    btn.setAttribute("onclick", `post_cat_favorite('${id}')`);
   } else {
     btn.setAttribute(
       "onclick",
