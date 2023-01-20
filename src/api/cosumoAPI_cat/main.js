@@ -140,3 +140,31 @@ function createBtn(id, imgs, band) {
   }
   imgs.appendChild(btn);
 }
+
+async function post_upload_cat(urlAPI, formData) {
+  try {
+    const data = await fetch(`${urlAPI}/images/upload`, {
+      method: "POST",
+      headers: {
+        // "Content-Type": "multipart/form-data",
+        "X-API-KEY":
+          "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06",
+      },
+      body: formData,
+    });
+    const cat_upload = await data.json();
+    console.log("Foto de michi subido");
+
+    post_cat_favorite(`${API}/favourites`, cat_upload.id);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function upload_photo() {
+  const form = document.getElementById("uploading");
+  const formData = new FormData(form);
+
+  console.log(formData.get("file"));
+  post_upload_cat(API, formData);
+}
