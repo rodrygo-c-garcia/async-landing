@@ -1,3 +1,11 @@
+// creamos una instancia de axios
+const instance_axios = axios.create({
+  baseURL: "https://api.thecatapi.com/v1",
+});
+
+instance.defaults.headers.common["X-API-KEY"] =
+  "live_PAs3CkLL5AcTBdXr2mTeb0zM87ICxpNtorBSThzJB3P3mB3z70BDbjaHt8R3gm06";
+
 const API = "https://api.thecatapi.com/v1";
 
 async function fetchData(urlAPI) {
