@@ -1,2 +1,2 @@
 # async-landing
-Asyncronismo en JavaScript
+Asyncronismo en JavaScript (Platzi)
